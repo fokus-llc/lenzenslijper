@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.0.0.xsd">
+
+  <!-- Template: replace {HOST}, {PORT}, {INSTANCE}, etc. -->
+  <jdbc>
+    <driver>org.postgresql.Driver</driver>
+    <url>jdbc:postgresql://{HOST}:{PORT}/{INSTANCE}</url>
+  </jdbc>
+
+  <generator>
+
+    <name>org.jooq.util.DefaultGenerator</name>
+
+    <database>
+      <name>org.jooq.util.postgres.PostgresDatabase</name>
+      <inputSchema>public</inputSchema>
+      <includes>.*</includes>
+      <excludes>^_?st_.*</excludes>
+    </database>
+
+    <target>
+      <packageName>us.fok.lenzenslijper.models.jooq</packageName>
+      <directory>src/main/java</directory>
+    </target>
+
+  </generator>
+
+</configuration>

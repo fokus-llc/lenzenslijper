@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/">
+
+    <!-- Resource "psql/bonecp/lenzenslijper" configured in server.xml -->
+    <ResourceLink name="psql/bonecp/lenzenslijper"
+                  global="psql/bonecp/lenzenslijper"
+                  type="javax.sql.DataSource"/>
+
+    <!-- NOTE: tomcat-specific realm classes -->
+    <Realm className="org.apache.catalina.realm.LockOutRealm">
+        <Realm className="org.apache.catalina.realm.DataSourceRealm"
+               userTable="virtual_api_users"
+               userRoleTable="virtual_api_roles"
+               dataSourceName="psql/bonecp/lenzenslijper"
+               userNameCol="user_name"
+               userCredCol="auth_token"
+               roleNameCol="role_name"
+               allRolesMode="strictAuthOnly" />
+    </Realm>
+
+</Context>

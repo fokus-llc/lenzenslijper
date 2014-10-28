@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="3.0">
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:lenzenslijper-beans.xml</param-value>
+  </context-param>
+
+  <servlet>
+    <servlet-name>SpringApplication</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>us.fok.lenzenslijper.context.WebContext</param-value>
+    </init-param>
+    <init-param>
+      <param-name>jersey.config.server.wadl.disableWadl</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>SpringApplication</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- requires tomcat >= 7.0.41 -->
+  <filter>
+    <filter-name>CORS</filter-name>
+    <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+    <init-param>
+      <param-name>cors.preflight.maxage</param-name>
+      <param-value>10</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.allowed.headers</param-name>
+      <param-value>Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>CORS</filter-name>
+    <servlet-name>SpringApplication</servlet-name>
+  </filter-mapping>
+
+  <login-config>
+      <auth-method>BASIC</auth-method>
+      <realm-name>auth</realm-name>
+  </login-config>
+
+  <security-constraint>
+
+      <web-resource-collection>
+          <web-resource-name>Authorized stuff</web-resource-name>
+          <url-pattern>/auth/*</url-pattern>
+          <http-method-omission>OPTIONS</http-method-omission>
+      </web-resource-collection>
+
+      <auth-constraint>
+          <role-name>*</role-name>
+      </auth-constraint>
+
+  </security-constraint>
+
+  <security-role>
+      <role-name>*</role-name>
+  </security-role>
+
+</web-app>
